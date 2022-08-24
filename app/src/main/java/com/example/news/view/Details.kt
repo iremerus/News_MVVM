@@ -9,7 +9,7 @@ import com.example.news.model.datamodel.NewsModel
 import com.google.gson.Gson
 
 
-class Details(): AppCompatActivity() {
+class Details: AppCompatActivity() {
     private lateinit var binding: DetailsLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

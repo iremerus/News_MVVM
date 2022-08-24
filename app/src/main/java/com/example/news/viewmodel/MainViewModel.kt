@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(): BaseViewModel() {
     var news: MutableLiveData<Array<NewsModel>>? = null
-    var itemNews: MutableLiveData<NewsModel>? = null
+    private val newsApi: JobServices = NewsApi.getRetroInstance().create(JobServices::class.java)
 
     fun init(binding: ActivityMainBinding, activity: MainActivity) {
         setViewDataBinding(binding)
@@ -24,12 +24,19 @@ class MainViewModel(): BaseViewModel() {
     }
 
     private fun getData() {
-        val newsApi = NewsApi.getRetroInstance().create(JobServices::class.java)
         news = MutableLiveData()
         GlobalScope.launch {
             val response = newsApi.getTurkeyTopNews()
             val newItems = response.body() as SectionModel
             news!!.postValue(newItems.articles)
+        }
+    }
+
+    fun addData() {
+        GlobalScope.launch {
+            val response = newsApi.getTurkeyTopNews()
+            val newItems = response.body() as SectionModel
+            news!!.postValue(news?.value?.plus(newItems.articles))
         }
     }
 

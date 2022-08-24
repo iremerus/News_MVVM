@@ -40,6 +40,7 @@ class NewsAdapter (private var news: Array<NewsModel>, private val viewModel: Ma
 
     fun updateData(news: Array<NewsModel>) {
         this.news = news
+        println(news)
         notifyDataSetChanged()
     }
 }
